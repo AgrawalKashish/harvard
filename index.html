@@ -18,7 +18,8 @@
     integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
     crossorigin="anonymous"></script>
   <div class="head1">
-    <b class="head">Welcome to the Harvard Art Museum</b>
+    <marquee behavior="alternate" onmouseover="stop()" onmouseout="start()">
+    <b class="head">Welcome to the Harvard Art Museum</b></marquee>
   </div>
   <div>
     <div class="container">
@@ -54,7 +55,7 @@
 
     document.querySelector("#grid").textContent = "";
 
-    const url = 'https://api.harvardartmuseums.org/object' + input.value + '&per_page=4&apikey=[30b5ee64-35ca-4e04-b4e6-58b89964370f]';
+    const url = 'https://api.harvardartmuseums.org/object'+input.value+'&per_page=4&apikey=[30b5ee64-35ca-4e04-b4e6-58b89964370f]';
 
     fetch(url)
 
