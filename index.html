@@ -50,12 +50,12 @@
   document.querySelector("#search").addEventListener("click", () => {
     apiRequest();
   });
-
+var inputvalue=document.querySelector('#input');
   apiRequest = () => {
 
     document.querySelector("#grid").textContent = "";
 
-    const url = 'https://api.harvardartmuseums.org/object'+input.value+'&per_page=4&apikey=[30b5ee64-35ca-4e04-b4e6-58b89964370f]';
+    const url = 'https://api.harvardartmuseums.org/exhibition?venue=HAM'+inputvalue.value+'&per_page=4&apikey=30b5ee64-35ca-4e04-b4e6-58b89964370f';
 
     fetch(url)
 
@@ -66,11 +66,12 @@
 
       .then(data => {
         loadImages(data);
+        console.log(data);
       })
       .catch(error => console.log(error));
   }
 
-  loadImages = (data) => {
+    loadImages = (data) => {
     for (let i = 0; i < data.results.length; i++) {
       let image = document.createElement("div");
       image.className = "img";
