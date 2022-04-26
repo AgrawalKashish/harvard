@@ -14,16 +14,20 @@
              background-repeat: no-repeat;
              width:100%;
              height:100%;">
+
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
     integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
     crossorigin="anonymous"></script>
   <div class="head1">
     <marquee behavior="alternate" onmouseover="stop()" onmouseout="start()" scrollamount="20">
-    <b class="head">Welcome to the Harvard Art Museum</b></marquee>
+      <b class="head">Welcome to the Harvard Art Museum</b>
+    </marquee>
   </div>
   <div>
-    <div class="container">
+    <div class="container" >
       <div class="row">
+        <div class="col-sm"></div>
+        <div class="col-sm"></div>
         <div class="col-sm" id="m">
           <div id="search_box">
             <input id="input" type="text" placeholder="Search..."><i id="search" class="fas fa-search"></i>
@@ -33,10 +37,34 @@
           <button type="button" class="btn btn-primary" id="button1"><b>SEARCH</b></button>
         </div>
       </div>
+    </div>
+    </div>
+  <div id="carouselExampleCaptions" class="carousel slide" data-bs-ride="carousel" >
+    <div class="carousel-inner">
+      <div class="carousel-item">
+        <img src="images.jpg" class="d-block w-100" alt="WEB_DEVELOPMENT" style="height: 500px;width: 100%;">
+      </div>
+      <div class="carousel-item active">
+        <img src="images (1).jpg" class="d-block w-100" alt="CCA" style="height: 500px;width: 100%;">
+      </div>
+    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="prev">
+      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Previous</span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="next">
+      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Next</span>
+    </button>
+  </div>
+  
       <section>
-        <div class="container">
-          <div id="grid"></div>
+        
+        <div class="container1">
+          <div id="grid">
+            <div class="title">HARVARD MUSEUM COLLECTION</div>
+          </div>
         </div>
+      
       </section>
 </body>
 
@@ -46,16 +74,16 @@
     if (event.key == "Enter")
       apiRequest();
   });
-
-  document.querySelector("#search").addEventListener("click", () => {
+  document.querySelector("#search").addEventListener("click", (event) => {
     apiRequest();
   });
-var inputvalue=document.querySelector('#input');
+  var inputvalue = document.querySelector('#input');
+  var title = document.querySelector('.title');
   apiRequest = () => {
 
     document.querySelector("#grid").textContent = "";
 
-    const url = 'https://api.harvardartmuseums.org/exhibition?venue=HAM'+inputvalue.value+'&per_page=4&apikey=30b5ee64-35ca-4e04-b4e6-58b89964370f';
+    const url = 'https://api.harvardartmuseums.org/exhibition?venue=HAM' + inputvalue.value + '&per_page=4&apikey=30b5ee64-35ca-4e04-b4e6-58b89964370f';
 
     fetch(url)
 
@@ -63,23 +91,21 @@ var inputvalue=document.querySelector('#input');
         if (!response.ok) throw Error(response.statusText);
         return response.json();
       })
-
       .then(data => {
-        loadImages(data);
         console.log(data);
-      })
-      .catch(error => console.log(error));
-  }
+        console.log(data.records.i.title);
+        
 
-    loadImages = (data) => {
-    for (let i = 0; i < data.results.length; i++) {
-      let image = document.createElement("div");
-      image.className = "img";
-      image.style.backgroundImage = "url(" + data.results[i].urls.raw + "&w=1366&h=768" + ")";
-      image.addEventListener("dblclick", function () {
-        window.open(data.results[i].links.download, '_blank');
+        for (let i = 0; i < data['records']['length']; i++) {
+          let image = document.createElement("div");
+          image.className = "img";
+          title.innerHTML = data['records']['0']['title'];
+          console.log(data['records']['i']['title']);
+          image.style.backgroundImage = url(data['records']['i']['url']);
+          document.querySelector("#grid").appendChild(image);
+        }
       })
-      document.querySelector("#grid").appendChild(image);
-    }
+
+      .catch(error => console.log(error));
   }
 </script>
