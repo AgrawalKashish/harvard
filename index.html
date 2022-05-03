@@ -24,13 +24,13 @@
     </marquee>
   </div>
   <div>
-    <div class="container" >
+    <div class="container">
       <div class="row">
         <div class="col-sm"></div>
         <div class="col-sm"></div>
         <div class="col-sm" id="m">
           <div id="search_box">
-            <input id="input" type="text" placeholder="Search..."><i id="search" class="fas fa-search"></i>
+            <input id="input" type="variable" placeholder="Search..."><i id="search" class="fas fa-search"></i>
           </div>
         </div>
         <div class="col-sm" id="button">
@@ -38,8 +38,8 @@
         </div>
       </div>
     </div>
-    </div>
-  <div id="carouselExampleCaptions" class="carousel slide" data-bs-ride="carousel" >
+  </div>
+  <div id="carouselExampleCaptions" class="carousel slide" data-bs-ride="carousel">
     <div class="carousel-inner">
       <div class="carousel-item">
         <img src="images.jpg" class="d-block w-100" alt="WEB_DEVELOPMENT" style="height: 500px;width: 100%;">
@@ -47,25 +47,28 @@
       <div class="carousel-item active">
         <img src="images (1).jpg" class="d-block w-100" alt="CCA" style="height: 500px;width: 100%;">
       </div>
-    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="prev">
-      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-      <span class="visually-hidden">Previous</span>
-    </button>
-    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="next">
-      <span class="carousel-control-next-icon" aria-hidden="true"></span>
-      <span class="visually-hidden">Next</span>
-    </button>
-  </div>
-  
-      <section>
-        
-        <div class="container1">
-          <div id="grid">
-            <div class="title">HARVARD MUSEUM COLLECTION</div>
-          </div>
+      <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions"
+        data-bs-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Previous</span>
+      </button>
+      <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleCaptions"
+        data-bs-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Next</span>
+      </button>
+    </div>
+
+    <section>
+
+      <div class="container1">
+        <div id="grid">
+          <div class="title">HARVARD MUSEUM COLLECTION</div>
+          <div class="img"></div>
         </div>
-      
-      </section>
+      </div>
+
+    </section>
 </body>
 
 </html>
@@ -81,9 +84,9 @@
   var title = document.querySelector('.title');
   apiRequest = () => {
 
-    document.querySelector("#grid").textContent = "";
+    document.querySelector("#grid").style.display = "block";
 
-    const url = 'https://api.harvardartmuseums.org/exhibition?venue=HAM' + inputvalue.value + '&per_page=4&apikey=30b5ee64-35ca-4e04-b4e6-58b89964370f';
+    const url = 'https://api.harvardartmuseums.org/image?&apikey=30b5ee64-35ca-4e04-b4e6-58b89964370f&exact_title=inputvalue.value';
 
     fetch(url)
 
@@ -92,19 +95,22 @@
         return response.json();
       })
       .then(data => {
+        console.log(inputvalue.value);
         console.log(data);
         console.log(data.records.i.title);
-        
 
         for (let i = 0; i < data['records']['length']; i++) {
           let image = document.createElement("div");
           image.className = "img";
+          image.innerHTML= `<img src="${data['records']['i']['url']}">`;
           title.innerHTML = data['records']['0']['title'];
           console.log(data['records']['i']['title']);
           image.style.backgroundImage = url(data['records']['i']['url']);
           document.querySelector("#grid").appendChild(image);
         }
+        
       })
+
 
       .catch(error => console.log(error));
   }
